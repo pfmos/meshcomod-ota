@@ -26,7 +26,10 @@ Adds, on top of `heltec_v4_repeater_tcp`:
 Contains no credentials, keys, or node identity — identity lives in SPIFFS and
 all MQTT settings are runtime prefs.
 
-## maxwell-heltec-v4-repeater-tcp-mqtt-status-stats-20260906.bin
+## mx-v4-stats-0906.bin
+
+(Short filename is deliberate: the repeater CLI frame caps at MAX_FRAME_SIZE 176
+bytes, and `ota url <url>` must fit inside one frame.)
 
 `heltec_v4_repeater_tcp_mqtt` with the MQTT `/status` document fixed to match the
 MC2MQTT contract the rest of the observer fleet publishes:
