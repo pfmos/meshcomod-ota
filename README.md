@@ -25,3 +25,20 @@ Adds, on top of `heltec_v4_repeater_tcp`:
 
 Contains no credentials, keys, or node identity — identity lives in SPIFFS and
 all MQTT settings are runtime prefs.
+
+## maxwell-heltec-v4-repeater-tcp-mqtt-status-stats-20260906.bin
+
+`heltec_v4_repeater_tcp_mqtt` with the MQTT `/status` document fixed to match the
+MC2MQTT contract the rest of the observer fleet publishes:
+
+- adds the `stats` block (battery, uptime, packet counters, queue, noise floor,
+  RSSI/SNR, air time, recv errors, heap), pushed in from `MyMesh` — it was never
+  implemented, which is why Maxwell's `/status` carried no telemetry
+- `timestamp` is now an ISO8601 string, not a bare integer
+- status is published **retained**, so a late subscriber sees current state
+- registers a retained MQTT last will, so an ungraceful death reports `offline`
+  instead of the node silently vanishing
+- adds the missing `client_version`
+
+Validated on a bench Heltec V3 before release. The previous image
+(`maxwell-heltec-v4-repeater-tcp-mqtt.bin`) is retained here as the rollback target.
