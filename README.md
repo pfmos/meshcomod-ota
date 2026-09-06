@@ -45,3 +45,15 @@ MC2MQTT contract the rest of the observer fleet publishes:
 
 Validated on a bench Heltec V3 before release. The previous image
 (`maxwell-heltec-v4-repeater-tcp-mqtt.bin`) is retained here as the rollback target.
+
+## mx-v4-wifi-0906.bin
+
+Adds Wi-Fi dead-link recovery to the repeater after a 50-minute outage where the
+existing 10s retry called `WiFi.begin()` into an unrecoverable state ~300 times:
+address-based link health, escalation to a full driver reset, a last-resort reboot
+after 30 min, and an RTC-backed reboot budget so a long AP outage cannot trade LoRa
+repeating for telemetry. Also arms the 30s task watchdog the repeater never had, and
+puts `get wifi.scan` / `get wifi.rssi` on the mesh CLI (the spaced `wifi scan` is
+reachable only over Wi-Fi, which is useless when Wi-Fi is the thing that is broken).
+
+Supersedes mx-v4-stats-0906.bin, which remains here as the rollback target.
